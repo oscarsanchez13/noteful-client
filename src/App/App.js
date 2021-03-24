@@ -8,6 +8,7 @@ import NotePageMain from '../NotePageMain/NotePageMain'
 import AddFolder from '../AddFolder/AddFolder'
 import AddNote from '../AddNote/AddNote'
 import ApiContext from '../ApiContext'
+import NotefulError from '../NotefulError'
 import config from '../config'
 import './App.css'
 
@@ -129,10 +130,12 @@ class App extends Component {
     }
     return (
       <ApiContext.Provider value={value}>
-        <div className='App'>
-          <nav className='App__nav'>
+        <div className='App'>          
+          <NotefulError>
+            <nav className='App__nav'>
             {this.renderNavRoutes()}
           </nav>
+          </NotefulError>
           <header className='App__header'>
             <h1>
               <Link to='/'>Noteful</Link>
@@ -140,9 +143,11 @@ class App extends Component {
               <FontAwesomeIcon icon='check-double' />
             </h1>
           </header>
-          <main className='App__main'>
+          <NotefulError>
+            <main className='App__main'>
             {this.renderMainRoutes()}
           </main>
+          </NotefulError>          
         </div>
       </ApiContext.Provider>
     )

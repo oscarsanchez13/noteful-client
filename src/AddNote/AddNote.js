@@ -2,15 +2,52 @@ import React, { Component } from 'react'
 import NotefulForm from '../NotefulForm/NotefulForm'
 import ApiContext from '../ApiContext'
 import config from '../config'
+import NoteError from './NoteError.js'
 import './AddNote.css'
 
 export default class AddNote extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      nameValid: false,
+      name: '',
+      validationMessages: {
+        name: '',
+      }
+    }
+  }
+
   static defaultProps = {
     history: {
       push: () => { }
     },
   }
   static contextType = ApiContext;
+
+  validateName(fieldValue) {
+    const fieldErrors = {...this.state.validationMessages};
+    let hasError = false;
+
+    fieldValue = fieldValue.trim();
+    if(fieldValue.length === 0) {
+      fieldErrors.name = 'Name is required';
+      hasError = true;
+    }
+    this.setState({
+      validationMessages: fieldErrors,
+      nameValid: !hasError
+    }, this.formValid );
+}
+
+  formValid(){
+    this.setState({
+      formValid: this.state.nameValid
+    });
+  }
+
+  updateName(name){
+    this.setState({name}, ()=>{this.validateName(name)});
+  }
 
   handleSubmit = e => {
     e.preventDefault()
@@ -37,8 +74,10 @@ export default class AddNote extends Component {
         this.props.history.push(`/folder/${note.folderId}`)
       })
       .catch(error => {
-        console.error({ error })
+        console.error('add note ', { error })
       })
+      
+    .finally( alert("Note Added!") )
   }
 
   render() {
@@ -51,7 +90,8 @@ export default class AddNote extends Component {
             <label htmlFor='note-name-input'>
               Name
             </label>
-            <input type='text' id='note-name-input' name='note-name' />
+            <input type='text' id='note-name-input' name='note-name' required/>
+            <NoteError className='validationError' hasError={!this.state.name} message={this.state.validationMessages.name}></NoteError>
           </div>
           <div className='field'>
             <label htmlFor='note-content-input'>
@@ -63,7 +103,7 @@ export default class AddNote extends Component {
             <label htmlFor='note-folder-select'>
               Folder
             </label>
-            <select id='note-folder-select' name='note-folder-id'>
+            <select id='note-folder-select' name='note-folder-id' required>
               <option value={null}>...</option>
               {folders.map(folder =>
                 <option key={folder.id} value={folder.id}>
