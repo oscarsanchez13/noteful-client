@@ -61,7 +61,7 @@ export default class Note extends React.Component {
             Modified
             {' '}
             <span className='Date'>
-              {format(modified, 'Do MMM YYYY')}
+              {format(new Date (modified), 'MMM do yyyy')}
             </span>
           </div>
         </div>
