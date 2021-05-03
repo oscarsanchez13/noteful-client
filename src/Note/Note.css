@@ -1,4 +1,3 @@
-
 .Note {
   --note-height: 88px;
   background-color: #010d1e;
@@ -52,4 +51,13 @@
   color: #a7a5a5;
   font-size: 14px;
   position: absolute;
+}
+
+.Note__dates-modified a {
+    color: rgb(48, 211, 143);
+    margin-left: 5px;
+}
+
+.Note__dates-modified a:hover {
+    color: rgb(3, 243, 143);
 }

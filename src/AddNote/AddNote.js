@@ -24,31 +24,6 @@ export default class AddNote extends Component {
   }
   static contextType = ApiContext;
 
-  validateName(fieldValue) {
-    const fieldErrors = {...this.state.validationMessages};
-    let hasError = false;
-
-    fieldValue = fieldValue.trim();
-    if(fieldValue.length === 0) {
-      fieldErrors.name = 'Name is required';
-      hasError = true;
-    }
-    this.setState({
-      validationMessages: fieldErrors,
-      nameValid: !hasError
-    }, this.formValid );
-}
-
-  formValid(){
-    this.setState({
-      formValid: this.state.nameValid
-    });
-  }
-
-  updateName(name){
-    this.setState({name}, ()=>{this.validateName(name)});
-  }
-
   handleSubmit = e => {
     e.preventDefault()
     const newNote = {
