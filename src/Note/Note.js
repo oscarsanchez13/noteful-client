@@ -23,20 +23,11 @@ export default class Note extends React.Component {
             headers: {
                 'content-type': 'application/json'
             },
-        })
-            .then(res => {
-                if (!res.ok)
-                    return res.json().then(e => Promise.reject(e))
-                // because api response is status(204).end() 
-                // here is no content on promise success
-                // so skip return of res.json()
-                // otherwise app breaks with Uncaught (in promise) "SyntaxError: Unexpected end of JSON input"
-
-            })
+        })            
             .then(() => {
                 this.context.deleteNote(noteId)
                 // allow parent to perform extra behaviour
-                this.props.onDeleteNote(noteId)
+                this.props.onDeleteNote()
             })
             .catch(error => {
                 console.error({ error })
@@ -44,7 +35,7 @@ export default class Note extends React.Component {
     }
     
     render() {
-        const { name, id, modified } = this.props
+        const { name, id, modified = new Date()} = this.props
         return (
             <div className='Note'>
                 <h2 className='Note__title'>
@@ -66,7 +57,7 @@ export default class Note extends React.Component {
                         Modified
                         {' '}
                         <span className='Date'>
-                            {format(modified, 'Do MMM YYYY')}
+                            {format(new Date (modified), 'MM dd yyyy')}
                         </span>
                         {' '}
                         <Link to={`/edit/${id}`}>Edit Note</Link>
