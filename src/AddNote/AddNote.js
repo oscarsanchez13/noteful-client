@@ -51,8 +51,6 @@ export default class AddNote extends Component {
       .catch(error => {
         console.error('add note ', { error })
       })
-      
-    .finally( alert("Note Added!") )
   }
 
   render() {
