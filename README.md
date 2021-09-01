@@ -1,8 +1,8 @@
 # Noteful
-
+Fullstack responsive application that provides a fun way to keep tasks and notes safe for users.
 
 ## Live App
-* https://noteful-client-solution-sigma.vercel.app/
+* You can find Noteful at https://noteful-client-solution-sigma.vercel.app/
 
 ## Live Screenshots
 
